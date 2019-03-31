@@ -17,6 +17,7 @@
 #     that short name in its dictionary and redirects to the corresponding
 #     long URI.
 
+import os
 import http.server
 import requests
 from urllib.parse import unquote, parse_qs
@@ -124,6 +125,6 @@ class Shortener(http.server.BaseHTTPRequestHandler):
              self.wfile.write("Sry :-/, uri is not fetched.".encode())
 
 if __name__ == '__main__':
-    server_address = ('', 8000)
+    server_address = int(os.environ.get('PORT', 8000))   # Use PORT if it's there.
     httpd = http.server.HTTPServer(server_address, Shortener)
     httpd.serve_forever()
